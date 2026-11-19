@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>logback</contextName>
+    <!--控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%t|%p| %m |%logger:%L%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 设置日志不超过${logMaxSize}时的保存路径，注意如果 是web项目会保存到Tomcat的bin目录 下 -->
+        <file>logs/debug.log</file>
+        <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/log-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <!-- 当天的日志大小 超过${logMaxSize}时,压缩日志并保存 -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- 日志输出的文件的格式  -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%t|%p| %m |%logger:%L%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/info-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%t|%p| %m |%logger:%L%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/warn-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%t|%p| %m |%logger:%L%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/error-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss}|%t|%p| %m |%logger:%L%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--配置邮箱发送错误日志-->
+    <!--    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">-->
+    <!--        &lt;!&ndash;服务器地址&ndash;&gt;-->
+    <!--        <smtpHost>smtp.qq.com</smtpHost>-->
+    <!--        &lt;!&ndash;端口(默认为465)&ndash;&gt;-->
+    <!--        <smtpPort>465</smtpPort>-->
+    <!--        &lt;!&ndash;用户名&ndash;&gt;-->
+    <!--        <username>76534267@qq.com</username>-->
+    <!--        &lt;!&ndash;smtp授权码&ndash;&gt;-->
+    <!--        <password>ldgpfimjvnfhbjje</password>-->
+    <!--        &lt;!&ndash;是否开启SSL安全&ndash;&gt;-->
+    <!--        <SSL>true</SSL>-->
+    <!--        &lt;!&ndash;是否异步发送&ndash;&gt;-->
+    <!--        <asynchronousSending>true</asynchronousSending>-->
+    <!--        &lt;!&ndash;发送者&ndash;&gt;-->
+    <!--        <from>76534267@qq.com</from>-->
+    <!--        &lt;!&ndash;接收者&ndash;&gt;-->
+    <!--        <to>76534267@qq.com,378455237@qq.com,451101027@qq.com,66723611@qq.com,1002541887@qq.com</to>-->
+    <!--        &lt;!&ndash;邮件主题&ndash;&gt;-->
+    <!--        <subject>【策略中心异常报警】【开发环境】%logger</subject>-->
+    <!--        &lt;!&ndash;编码&ndash;&gt;-->
+    <!--        <charsetEncoding>UTF-8</charsetEncoding>-->
+
+    <!--        <cyclicBufferTracker class="ch.qos.logback.core.spi.CyclicBufferTracker">-->
+    <!--            &lt;!&ndash; 每个电子邮件只发送一个日志条目 &ndash;&gt;-->
+    <!--            <bufferSize>1</bufferSize>-->
+    <!--        </cyclicBufferTracker>-->
+
+    <!--        &lt;!&ndash;HTML展示&ndash;&gt;-->
+    <!--        <layout class="ch.qos.logback.classic.html.HTMLLayout"/>-->
+    <!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+    <!--            &lt;!&ndash;错误级别(只会提示大于该级别的错误)&ndash;&gt;-->
+    <!--            <level>ERROR</level>-->
+    <!--        </filter>-->
+    <!--    </appender>-->
+
+
+    <logger name="jdbc" level="INFO"/>
+    <logger name="org" level="INFO"/>
+    <logger name="net" level="INFO"/>
+    <logger name="sql" level="INFO"/>
+    <logger name="java.sql" level="INFO"/>
+    <logger name="javax" level="INFO"/>
+    <!--打印sql-->
+    <logger name="com.huaneng.data.mapper" level="debug"/>
+    <!--nacos心跳日志级别设置 -->
+    <!--    <logger name="com.alibaba.nacos" level="warn"/>   <logger name="com.alibaba.nacos" level="warn"/>-->
+    <!--skywalking grpc日志级别设置-->
+    <!--    <logger name="org.apache.skywalking.apm.dependencies" level="warn" />-->
+
+
+    <!--日志的输出级别由低到高（越来问题越严重）trace->debug->info->warn->error -->
+    <!-- root将级别为DEBUG及大于DEBUG的日志信息交给已经配置好的name='STDOUT'的appender处理，将信息打印到控制台-Console -->
+    <root level="debug">
+        <!-- appender-ref标识这个appender将会添加到本应用的日志系统中 -->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="ERROR"/>
+        <!--        <appender-ref ref="EMAIL"/>-->
+        <!--        <appender-ref ref="grpc-log" />-->
+    </root>
+</configuration>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huaneng.data.mapper.SsqHistoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huaneng.data.entity.SsqHistory">
+        <id column="num" property="num"/>
+        <result column="yldate" property="yldate"/>
+        <result column="nldate" property="nldate"/>
+        <result column="ylyear" property="ylyear"/>
+        <result column="red1" property="red1"/>
+        <result column="red2" property="red2"/>
+        <result column="red3" property="red3"/>
+        <result column="red4" property="red4"/>
+        <result column="red5" property="red5"/>
+        <result column="red6" property="red6"/>
+        <result column="blue" property="blue"/>
+        <result column="total_sum_value" property="totalSumValue"/>
+        <result column="total_avage_value" property="totalAvageValue"/>
+        <result column="red_sum_value" property="redSumValue"/>
+        <result column="red_avage_value" property="redAvageValue"/>
+        <result column="ylmonth" property="ylmonth"/>
+        <result column="ylday" property="ylday"/>
+        <result column="nlyear" property="nlyear"/>
+        <result column="nlmonth" property="nlmonth"/>
+        <result column="nlday" property="nlday"/>
+        <result column="cnnlyear" property="cnnlyear"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        num
+        , yldate, nldate, ylyear, red1, red2, red3, red4, red5, red6, blue, total_sum_value, total_avage_value, red_sum_value, red_avage_value, ylmonth, ylday, nlyear, nlmonth, nlday, cnnlyear
+    </sql>
+
+    <update id="setSum">
+        update ssq_history
+        set red_sum_value=cast(red1 as decimal(10, 0)) + cast(red2 as decimal(10, 0)) + cast(red3 as decimal(10, 0)) +
+                          cast(red4 as decimal(10, 0)) + cast(red5 as decimal(10, 0)) + cast(red6 as decimal(10, 0)),
+            total_sum_value=cast(red1 as decimal(10, 0)) + cast(red2 as decimal(10, 0)) + cast(red3 as decimal(10, 0)) +
+                            cast(red4 as decimal(10, 0)) + cast(red5 as decimal(10, 0)) + cast(red6 as decimal(10, 0)) +
+                            cast(blue as decimal(10, 0))
+        where num = ${num}
+    </update>
+
+    <update id="setAvage">
+        update ssq_history
+        set red_avage_value=red_sum_value / 6,
+            total_avage_value=total_sum_value / 7
+        where num = ${num}
+    </update>
+
+</mapper>
